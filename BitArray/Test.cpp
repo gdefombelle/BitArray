@@ -6,7 +6,7 @@
 #include "BitArray.h"
 int main()
 {
-	printf("How long should the dynamic array be? ");
+	printf("How long should the dynamic array be ? ");
 
 	int length = 96;
 	//scanf_s("%d", &length);
@@ -52,10 +52,10 @@ int main()
 
 	unsigned long ul;
 	bitArray.Retrieve(4, 7, &ul);
-
+	//fghjkl
 
 	unsigned char buffer2[4];
-	// JJJJzz
+
 	bitArray.Retrieve(4, 7, buffer2, 4, bitArray.BIG_ENDIAN);
 	long ll;
 	bitArray.Retrieve(4, 7, &ll);
