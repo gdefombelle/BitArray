@@ -52,9 +52,9 @@ private:
 	int byteArrayCount;
 	unsigned char OneByteMask(int from, int to);
 
-	void intToByteArray(unsigned int n);
-	void longToByteArray(unsigned int n);
-	void charToByteArray(unsigned char n);
+	void IntToByteArray(unsigned int n);
+	void LongToByteArray(unsigned int n);
+	void CharToByteArray(unsigned char n);
 
 	unsigned char _baChar[sizeof(char)];
 	unsigned char _baInt[sizeof(int)];

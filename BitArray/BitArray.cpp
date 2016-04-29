@@ -37,32 +37,32 @@ int BitArray::ToggleBit(int atBitPos, bool *b) {
 int BitArray::StoreInt(int nbits, int atBitPos, int value) {
 	if (nbits > sizeof(int) * 8) return false;
 	if (value > (1 << nbits)) return false;
-	intToByteArray(value);
+	IntToByteArray(value);
 	return StoreByteArray(nbits, 0, atBitPos, _baInt, BIG_ENDIAN);
 }
 int BitArray::StoreUInt(int nbits, int atBitPos, unsigned int value) {
 	if (nbits > sizeof(int) * 8) return false;
 	if (value > (1 << nbits)) return false;
-	intToByteArray(value);
+	IntToByteArray(value);
 	return StoreByteArray(nbits, 0, atBitPos, _baInt, BIG_ENDIAN);
 }
 
 int BitArray::StoreChar(int nbits, int atBitPos, unsigned char value) {
 	if (nbits > sizeof(char) * 8) return false;
 	if (value > (1 << nbits)) return false;
-	charToByteArray(value);
+	CharToByteArray(value);
 	return StoreByteArray(nbits, 0, atBitPos, _baChar, BIG_ENDIAN);
 }
 int BitArray::StoreLong(int nbits, int atBitPos, long value) {
 	if (nbits > sizeof(long) * 8) return false;
 	if (value > (1 << nbits)) return false;
-	longToByteArray(value);
+	LongToByteArray(value);
 	return StoreByteArray(nbits, 0, atBitPos, _baLong, BIG_ENDIAN);
 }
 int BitArray::StoreULong(int nbits, int atBitPos, unsigned long value) {
 	if (nbits > sizeof(long) * 8) return false;
 	if (value > (1 << nbits)) return false;
-	longToByteArray(value);
+	LongToByteArray(value);
 	return StoreByteArray(nbits, 0, atBitPos, _baLong, BIG_ENDIAN);
 }
 
@@ -254,20 +254,20 @@ int BitArray::GetBitArraySizeByte() {
 	return byteArrayCount;
 }
 
-void BitArray::intToByteArray(unsigned int n) {
+void BitArray::IntToByteArray(unsigned int n) {
 	int l = sizeof(int);
 	for (int i = l - 1; i >= 0; i--) {
 		_baInt[l - i - 1] = (n >> 8 * i) & 0xFF;
 	}
 }
-void BitArray::longToByteArray(unsigned int n) {
+void BitArray::LongToByteArray(unsigned int n) {
 	int l = sizeof(long);
 	for (int i = l - 1; i >= 0; i--) {
 		_baLong[l - i - 1] = (n >> 8 * i) & 0xFF;
 	}
 }
 
-void BitArray::charToByteArray(unsigned char n) {
+void BitArray::CharToByteArray(unsigned char n) {
 	int l = sizeof(char);
 	for (int i = l - 1; i >= 0; i--) {
 		_baChar[l - i - 1] = (n >> 8 * i) & 0xFF;
