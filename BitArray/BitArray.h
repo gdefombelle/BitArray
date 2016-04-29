@@ -12,11 +12,10 @@ public:
 	BitArray(int bitSize);
 	~BitArray();
 	//*** main method 
-	int StoreBits(int nbits, int fromStartingBit, int atStartingBit, unsigned char from[], ENDIAN endian);
-	int StoreBits2(int nbits, int fromStartingBit, int atStartingBit, unsigned char from[], ENDIAN endian);
+	int StoreByteArray(int nbits, int fromStartingBit, int atStartingBit, unsigned char from[], ENDIAN endian);
 
 	int SetBit(int atBitPos, bool b);
-	int Toggle(int atBitPos, bool *b);
+	int ToggleBit(int atBitPos, bool *b);
 	int StoreInt(int nbits, int atBitPos, int from);
 	int StoreUInt(int nbits, int atBitPos, unsigned int from);
 	int StoreChar(int nbits, int atBitPos, unsigned char from);
@@ -27,19 +26,18 @@ public:
 
 
 	int Bit(int atBitPos, bool* b);
-	int Retrieve(int nbits, int atBitPos, unsigned char *buffer, int len, ENDIAN endian);
+	int RetrieveByteArray(int nbits, int atBitPos, unsigned char *buffer, int len, ENDIAN endian);
 
-	int Retrieve(int nbits, int atBitPos, int* toInt);
-	int Retrieve(int nbits, int atBitPos, char* toChar);
-	int Retrieve(int nbits, int atBitPos, unsigned int* toUint);
-	int Retrieve(int nbits, int atBitPos, unsigned long* toUlong);
-	int Retrieve(int nbits, int atBitPos, long* toLong);
-	int Retrieve(int atBitPos, float* toFloat);
-	int Retrieve(int atBitPos, double* toDouble);
+	int RetrieveInt(int nbits, int atBitPos, int* toInt);
+	int RetrieveChar(int nbits, int atBitPos, char* toChar);
+	int RetrieveUInt(int nbits, int atBitPos, unsigned int* toUint);
+	int RetrieveULong(int nbits, int atBitPos, unsigned long* toUlong);
+	int RetrieveLong(int nbits, int atBitPos, long* toLong);
+	int RetrieveFloat(int atBitPos, float* toFloat);
+	int RetrieveDouble(int atBitPos, double* toDouble);
 
-	unsigned char* GetByteArray(ENDIAN endian);
-	int GetByteArrayCount();
-	unsigned char OneByteMask(int from, int to);
+	unsigned char* GetEntireBitArray(ENDIAN endian);
+	int GetBitArraySizeByte();
 	bool IsBigEndian(void);
 private:
 	void Initialize();
@@ -52,8 +50,8 @@ private:
 	// b[0] = C7; b[1] = 1B; b[2] = 02; b[3] = FA
 	unsigned char *byteArray;
 	int byteArrayCount;
+	unsigned char OneByteMask(int from, int to);
 
-	int zeroMask = 0b00000000;
 	void intToByteArray(unsigned int n);
 	void longToByteArray(unsigned int n);
 	void charToByteArray(unsigned char n);
