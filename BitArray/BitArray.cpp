@@ -95,7 +95,7 @@ int BitArray::StoreByteArray(int nbits, int fromSourceStartingBit, int atTargetS
 	//if (fromSourceStartingBit + nbits > sizeof(value) * sizeof(char) * 8) return 5;
 	//
 	// convert byte array to LITTLE_ENDIAN
-	if (endian == BIG_ENDIAN) value = reverseByteArray(value);
+	if (endian == BIG_ENDIAN) value = ReverseByteArray(value);
 
 	int sourceEndingByte = (fromSourceStartingBit + nbits) / 8 - 1;
 	int sourceEndingBit = fromSourceStartingBit + nbits - 1;
@@ -143,7 +143,7 @@ int BitArray::RetrieveByteArray(int nbits, int atBitPos, unsigned char *buffer, 
 		else buffer[cursorBuffer / 8] &= ~(1 << (cursorBuffer % 8));
 		cursorBuffer++;
 	}
-	if (endian == BIG_ENDIAN) buffer = reverseByteArray(buffer, len);
+	if (endian == BIG_ENDIAN) buffer = ReverseByteArray(buffer, len);
 	return true;
 }
 
@@ -233,20 +233,20 @@ void BitArray::InsertBitsFromByteToByte(unsigned char sourceByte, int sourceBitS
 	byteArray[targetByteIndex] = byteArray[targetByteIndex] | valueToInsert;
 }
 
-unsigned char* BitArray::reverseByteArray(unsigned char byteArray[]) {
+unsigned char* BitArray::ReverseByteArray(unsigned char byteArray[]) {
 	int l = sizeof(byteArray);
 	unsigned char* _v = (unsigned char*)malloc(l * sizeof(char));
 	for (int i = 0; i < l; i++) _v[l - i - 1] = byteArray[i];
 	return _v;
 }
-unsigned char* BitArray::reverseByteArray(unsigned char *byteArray, int len) {
+unsigned char* BitArray::ReverseByteArray(unsigned char *byteArray, int len) {
 	unsigned char* _v = (unsigned char*)malloc(len * sizeof(char));
 	for (int i = 0; i < len; i++) _v[len - i - 1] = byteArray[i];
 	return _v;
 }
 
 unsigned char* BitArray::GetEntireBitArray(ENDIAN endian = BIG_ENDIAN) {
-	if (BIG_ENDIAN) return reverseByteArray(byteArray);
+	if (BIG_ENDIAN) return ReverseByteArray(byteArray);
 	else return byteArray;
 }
 

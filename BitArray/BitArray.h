@@ -41,8 +41,8 @@ public:
 	bool IsBigEndian(void);
 private:
 	void Initialize();
-	unsigned char* reverseByteArray(unsigned char byteArray[]);
-	unsigned char* reverseByteArray(unsigned char *byteArray, int len);
+	unsigned char* ReverseByteArray(unsigned char byteArray[]);
+	unsigned char* ReverseByteArray(unsigned char *byteArray, int len);
 	void InsertBitsFromByteToByte(unsigned char sourceByte, int sourceBitStartIndex, int targetByteIndex, int targetBitStartIndex, int nbits);
 	int GetBit(int atPos);
 
