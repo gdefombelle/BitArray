@@ -55,7 +55,7 @@ int main()
 
 
 	unsigned char buffer2[4];
-	// JJJJ
+	// JJJJzz
 	bitArray.Retrieve(4, 7, buffer2, 4, bitArray.BIG_ENDIAN);
 	long ll;
 	bitArray.Retrieve(4, 7, &ll);
