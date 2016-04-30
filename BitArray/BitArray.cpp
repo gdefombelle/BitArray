@@ -36,32 +36,27 @@ int BitArray::ToggleBit(int atBitPos, bool *b) {
 }
 int BitArray::StoreInt(int nbits, int atBitPos, int value) {
 	if (nbits > sizeof(int) * 8) return false;
-	if (value > (1 << nbits)) return false;
 	IntToByteArray(value);
 	return StoreByteArray(nbits, 0, atBitPos, _baInt, BIG_ENDIAN);
 }
 int BitArray::StoreUInt(int nbits, int atBitPos, unsigned int value) {
 	if (nbits > sizeof(int) * 8) return false;
-	if (value > (1 << nbits)) return false;
 	IntToByteArray(value);
 	return StoreByteArray(nbits, 0, atBitPos, _baInt, BIG_ENDIAN);
 }
 
 int BitArray::StoreChar(int nbits, int atBitPos, unsigned char value) {
 	if (nbits > sizeof(char) * 8) return false;
-	if (value > (1 << nbits)) return false;
 	CharToByteArray(value);
 	return StoreByteArray(nbits, 0, atBitPos, _baChar, BIG_ENDIAN);
 }
 int BitArray::StoreLong(int nbits, int atBitPos, long value) {
 	if (nbits > sizeof(long) * 8) return false;
-	if (value > (1 << nbits)) return false;
 	LongToByteArray(value);
 	return StoreByteArray(nbits, 0, atBitPos, _baLong, BIG_ENDIAN);
 }
 int BitArray::StoreULong(int nbits, int atBitPos, unsigned long value) {
 	if (nbits > sizeof(long) * 8) return false;
-	if (value > (1 << nbits)) return false;
 	LongToByteArray(value);
 	return StoreByteArray(nbits, 0, atBitPos, _baLong, BIG_ENDIAN);
 }

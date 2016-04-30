@@ -27,6 +27,10 @@ int main()
 	//printf("\nnot mask  : %d", (unsigned char)~mask);
 
 	bool isBiendian = bitArray.IsBigEndian();
+
+
+
+
 	int errorCode = bitArray.StoreByteArray(9, 3, 9, buffer, bitArray.BIG_ENDIAN);
 
 	bool b = false;
@@ -71,6 +75,8 @@ int main()
 
 	double d2 = 0;
 	bitArray.RetrieveDouble(3, &d2);
+
+
 	_getch();
 
 
