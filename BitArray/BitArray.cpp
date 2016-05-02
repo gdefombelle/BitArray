@@ -23,7 +23,7 @@ BitArray::~BitArray()
 // ******************* Store ************************************
 
 int BitArray::SetBit(int atBitPos, bool b) {
-	if (atBitPos > byteArrayCount * sizeof(char)) return false;
+	if (atBitPos > byteArrayCount * sizeof(char) * 8) return false;
 	if (b) byteArray[atBitPos / 8] |= (1 << (atBitPos % 8));
 	else byteArray[atBitPos / 8] &= ~(1 << (atBitPos % 8));
 	return true;
@@ -122,7 +122,7 @@ int BitArray::StoreByteArray(int nbits, int fromSourceStartingBit, int atTargetS
 
 // ***************** Retrieve **********************************
 int BitArray::Bit(int atBitPos, bool *b) {
-	if (atBitPos > byteArrayCount * sizeof(char)) return -1;
+	if (atBitPos > byteArrayCount * sizeof(char) * 8) return -1;
 	*b = (byteArray[atBitPos / 8] & (1 << (atBitPos % 8)));
 	return true;
 }
@@ -272,7 +272,8 @@ void BitArray::CharToByteArray(unsigned char n) {
 bool BitArray::IsBigEndian(void)
 {
 	union {
-		uint32_t i;
+		//uint32_t i; does not work with Arduino
+		long i;
 		char c[4];
 	} bint = { 0x01020304 };
 	return bint.c[0] == 1;
