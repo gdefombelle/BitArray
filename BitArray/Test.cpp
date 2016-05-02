@@ -31,7 +31,7 @@ int main()
 
 	unsigned char byteArray[4]{ 0x45, 0x72, 0x78, 0x7 };
 	bool b1, b2, b3, b4, b5, b6, b7;
-	int i1, i2, i3, i4;;
+	int i1, i2, i3, i4;
 	unsigned char c1;
 	float f1;
 	long l1;
@@ -41,7 +41,7 @@ int main()
 	bitArray.SetBit(1, false);
 	bitArray.SetBit(2, true);
 	bitArray.StoreInt(6, 3, 27);
-	bitArray.StoreFloat(9, 3.14159);
+	bitArray.StoreFloat(9, (float)3.14159);
 	bitArray.StoreChar(8, 41, 255);
 	bitArray.StoreLong(32, 49, 785987);
 	bitArray.StoreInt(4, 81, 14);
@@ -50,7 +50,7 @@ int main()
 	bitArray.SetBit(87, true);
 	bitArray.StoreInt(4, 88, 13);
 	bitArray.SetBit(92, true);
-	bitArray.StoreByteArray(31, 0, 93, byteArray, sizeof(byteArray)/sizeof(char), bitArray.LITTLE_ENDIAN);
+	bitArray.StoreByteArray(31, 0, 93, byteArray, sizeof(byteArray)/sizeof(char));
 	bitArray.StoreInt(4, 124, 12);
 	
 	// Retrieve
@@ -67,11 +67,12 @@ int main()
 	bitArray.Bit(87, &b6);
 	bitArray.RetrieveInt(4, 88, &i3);
 	bitArray.Bit(92, &b7);
-	bitArray.RetrieveByteArray(31, 93, byteArray, sizeof(byteArray), bitArray.LITTLE_ENDIAN);
+	bitArray.RetrieveByteArray(31, 93, byteArray, sizeof(byteArray));
+	bitArray.RetrieveInt(4, 124, &i4);
 
 	// Print bitArray
 	unsigned char* buffer;
-	buffer = bitArray.GetEntireBitArray(bitArray.LITTLE_ENDIAN);
+	buffer = bitArray.GetEntireBitArray();
 	int i;
 	for (i = 0; i < bitArray.GetBitArraySizeByte(); i++)
 	{
@@ -81,7 +82,7 @@ int main()
 	printf("\n");
 	
 	_getch();
-
+	
 
 	return 0;
 }
