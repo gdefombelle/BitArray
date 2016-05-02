@@ -7,55 +7,79 @@
 #include <string.h>
 int main()
 {
-	printf("How long should the dynamic array be ? ");
+	const int length = 128;
+	/*
+	Example : storing and retrievening this data to and from a 12 bytes (96 bits) BitArray
+	data	number of bits to store
+	bool	1
+	bool	1
+	bool	1
+	int	6
+	float	32
+	char	8
+	long	32
+	int	4
+	bool	1
+	bool	2
+	bool	3
+	int	4
+	bool	1
+	byteArray[4]	31
+	int	4
+	*/
+	printf("TEST BITARRAY.\n");
 
-	int length = 96;
-	//scanf_s("%d", &length);
-	// test class BitArray
-	printf("TEST BITARRAY.");
+	unsigned char byteArray[4]{ 0x45, 0x72, 0x78, 0x7 };
+	bool b1, b2, b3, b4, b5, b6, b7;
+	int i1, i2, i3, i4;;
+	unsigned char c1;
+	float f1;
+	long l1;
+	// Store 
 	BitArray bitArray(length);
-	printf("length: %d\n", bitArray.GetBitArraySizeByte());
+	bitArray.SetBit(0, true);
+	bitArray.SetBit(1, false);
+	bitArray.SetBit(2, true);
+	bitArray.StoreInt(6, 3, 27);
+	bitArray.StoreFloat(9, 3.14159);
+	bitArray.StoreChar(8, 41, 255);
+	bitArray.StoreLong(32, 49, 785987);
+	bitArray.StoreInt(4, 81, 14);
+	bitArray.SetBit(85, true);
+	bitArray.SetBit(86, true);
+	bitArray.SetBit(87, true);
+	bitArray.StoreInt(4, 88, 13);
+	bitArray.SetBit(92, true);
+	bitArray.StoreByteArray(31, 0, 93, byteArray, sizeof(byteArray)/sizeof(char), bitArray.LITTLE_ENDIAN);
+	bitArray.StoreInt(4, 124, 12);
+	
+	// Retrieve
+	bitArray.Bit(0, &b1);
+	bitArray.Bit(1, &b2);
+	bitArray.Bit(2, &b3);
+	bitArray.RetrieveInt(6, 3, &i1);
+	bitArray.RetrieveFloat(9, &f1);
+	bitArray.RetrieveChar(8, 41, &c1);
+	bitArray.RetrieveLong(32, 49, &l1);
+	bitArray.RetrieveInt(4, 81, &i2);
+	bitArray.Bit(85, &b4);
+	bitArray.Bit(86, &b5);
+	bitArray.Bit(87, &b6);
+	bitArray.RetrieveInt(4, 88, &i3);
+	bitArray.Bit(92, &b7);
+	bitArray.RetrieveByteArray(31, 93, byteArray, sizeof(byteArray), bitArray.LITTLE_ENDIAN);
 
-	int i1 = 800;
-	bitArray.StoreInt(8, 0, i1);
-	float f1 = 3.14616;
-	bitArray.StoreFloat(8, f1);
-
-	float f2 = 0;
-	int i2 = 0;
-
-	bitArray.RetrieveInt(8, 0, &i2);
-	bitArray.RetrieveFloat(8, &f2);
-
-
-	bool b1 = true;
-	bool b2 = false;
-	bool b3 = true;
-	bool b4;
-	bool b5;
-	bool b6;
-
-	bitArray.SetBit(40, b1);
-	bitArray.SetBit(41, b2);
-	bitArray.SetBit(42, b3);
-
-	bitArray.Bit(40, &b4);
-	bitArray.Bit(41, &b5);
-	bitArray.Bit(42, &b6);
-
-	struct {
-		int a;
-		float f;
-		double d;
-		bool c;
-		char str[25];
-		char* pstr;
-	} ss;
-	ss.a = 1234;
-	ss.f = 3.14154687;
-	ss.d = 465446464;
-	strcpy_s(ss.str, "C Programming");
-	ss.pstr = "bonjour\0";
+	// Print bitArray
+	unsigned char* buffer;
+	buffer = bitArray.GetEntireBitArray(bitArray.LITTLE_ENDIAN);
+	int i;
+	for (i = 0; i < bitArray.GetBitArraySizeByte(); i++)
+	{
+		if (i > 0) printf(":");
+		printf("%02X", buffer[i]);
+	}
+	printf("\n");
+	
 	_getch();
 
 

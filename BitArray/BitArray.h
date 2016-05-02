@@ -10,10 +10,10 @@ class BitArray
 public:
 	enum ENDIAN { BIG_ENDIAN, LITTLE_ENDIAN };
 	BitArray(int bitSize);
-	~BitArray();
-	//*** main method 
-	int StoreByteArray(int nbits, int fromStartingBit, int atStartingBit, unsigned char from[], ENDIAN endian);
 
+	//store
+	~BitArray();
+	int StoreByteArray(int nbits, int fromStartingBit, int atStartingBit, unsigned char from[], int length, ENDIAN endian);
 	int SetBit(int atBitPos, bool b);
 	int ToggleBit(int atBitPos, bool *b);
 	int StoreInt(int nbits, int atBitPos, int from);
@@ -24,12 +24,11 @@ public:
 	int StoreFloat(int atBitPos, float from);
 	int StoreDouble(int atBitPos, double from);
 
-
+	// retrieve
 	int Bit(int atBitPos, bool* b);
 	int RetrieveByteArray(int nbits, int atBitPos, unsigned char *buffer, int len, ENDIAN endian);
-
 	int RetrieveInt(int nbits, int atBitPos, int* toInt);
-	int RetrieveChar(int nbits, int atBitPos, char* toChar);
+	int RetrieveChar(int nbits, int atBitPos, unsigned char* toChar);
 	int RetrieveUInt(int nbits, int atBitPos, unsigned int* toUint);
 	int RetrieveULong(int nbits, int atBitPos, unsigned long* toUlong);
 	int RetrieveLong(int nbits, int atBitPos, long* toLong);

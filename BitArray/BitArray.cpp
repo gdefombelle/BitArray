@@ -37,28 +37,28 @@ int BitArray::ToggleBit(int atBitPos, bool *b) {
 int BitArray::StoreInt(int nbits, int atBitPos, int value) {
 	if (nbits > sizeof(int) * 8) return false;
 	IntToByteArray(value);
-	return StoreByteArray(nbits, 0, atBitPos, _baInt, BIG_ENDIAN);
+	return StoreByteArray(nbits, 0, atBitPos, _baInt, sizeof(_baInt)/sizeof(char), BIG_ENDIAN);
 }
 int BitArray::StoreUInt(int nbits, int atBitPos, unsigned int value) {
 	if (nbits > sizeof(int) * 8) return false;
 	IntToByteArray(value);
-	return StoreByteArray(nbits, 0, atBitPos, _baInt, BIG_ENDIAN);
+	return StoreByteArray(nbits, 0, atBitPos, _baInt, sizeof(_baInt) / sizeof(char),BIG_ENDIAN);
 }
 
 int BitArray::StoreChar(int nbits, int atBitPos, unsigned char value) {
 	if (nbits > sizeof(char) * 8) return false;
 	CharToByteArray(value);
-	return StoreByteArray(nbits, 0, atBitPos, _baChar, BIG_ENDIAN);
+	return StoreByteArray(nbits, 0, atBitPos, _baChar, sizeof(_baChar) / sizeof(char), BIG_ENDIAN);
 }
 int BitArray::StoreLong(int nbits, int atBitPos, long value) {
 	if (nbits > sizeof(long) * 8) return false;
 	LongToByteArray(value);
-	return StoreByteArray(nbits, 0, atBitPos, _baLong, BIG_ENDIAN);
+	return StoreByteArray(nbits, 0, atBitPos, _baLong, sizeof(_baLong) / sizeof(char), BIG_ENDIAN);
 }
 int BitArray::StoreULong(int nbits, int atBitPos, unsigned long value) {
 	if (nbits > sizeof(long) * 8) return false;
 	LongToByteArray(value);
-	return StoreByteArray(nbits, 0, atBitPos, _baLong, BIG_ENDIAN);
+	return StoreByteArray(nbits, 0, atBitPos, _baLong, sizeof(_baLong) / sizeof(char), BIG_ENDIAN);
 }
 
 int BitArray::StoreFloat(int atBitPos, float value) {
@@ -69,7 +69,7 @@ int BitArray::StoreFloat(int atBitPos, float value) {
 		unsigned char bytes[sizeof(float)];
 	} u;
 	u.af = value;
-	return StoreByteArray(len * 8, 0, atBitPos, u.bytes, IsBigEndian() ? BIG_ENDIAN : LITTLE_ENDIAN);
+	return StoreByteArray(len * 8, 0, atBitPos, u.bytes, sizeof(float), IsBigEndian() ? BIG_ENDIAN : LITTLE_ENDIAN);
 }
 
 int BitArray::StoreDouble(int atBitPos, double value) {
@@ -80,17 +80,18 @@ int BitArray::StoreDouble(int atBitPos, double value) {
 		unsigned char bytes[sizeof(double)];
 	} u;
 	u.af = value;
-	return StoreByteArray(len * 8, 0, atBitPos, u.bytes, IsBigEndian() ? BIG_ENDIAN : LITTLE_ENDIAN);
+	return StoreByteArray(len * 8, 0, atBitPos, u.bytes, sizeof(double), IsBigEndian() ? BIG_ENDIAN : LITTLE_ENDIAN);
 }
 
 
-int BitArray::StoreByteArray(int nbits, int fromSourceStartingBit, int atTargetStartingBit, unsigned char value[], ENDIAN endian) {
+int BitArray::StoreByteArray(int nbits, int fromSourceStartingBit, int atTargetStartingBit, unsigned char value[], int length, ENDIAN endian) {
 	int ret = true;
 	if (atTargetStartingBit + nbits > byteArrayCount * 8) return 3;
 	//if (fromSourceStartingBit + nbits > sizeof(value) * sizeof(char) * 8) return 5;
 	//
 	// convert byte array to LITTLE_ENDIAN
-	if (endian == BIG_ENDIAN) value = ReverseByteArray(value);
+	if (endian == BIG_ENDIAN) value = ReverseByteArray(value, length);
+
 
 	int sourceEndingByte = (fromSourceStartingBit + nbits) / 8 - 1;
 	int sourceEndingBit = fromSourceStartingBit + nbits - 1;
@@ -105,7 +106,7 @@ int BitArray::StoreByteArray(int nbits, int fromSourceStartingBit, int atTargetS
 	int cursorSourceGlobalBit = fromSourceStartingBit;
 
 
-	while (cursorSourceGlobalBit < sourceEndingBit) {
+	while (cursorSourceGlobalBit <= sourceEndingBit) {
 		int cursorSourceLocalBit = cursorSourceGlobalBit % 8;
 		int cursorTargetLocalBit = cursorTargetGlobalBit % 8;
 		int cursorTargetByte = cursorTargetGlobalBit / 8;
@@ -118,8 +119,6 @@ int BitArray::StoreByteArray(int nbits, int fromSourceStartingBit, int atTargetS
 
 	return ret;
 }
-
-
 // ***************** Retrieve **********************************
 int BitArray::Bit(int atBitPos, bool *b) {
 	if (atBitPos > byteArrayCount * sizeof(char) * 8) return -1;
@@ -150,8 +149,9 @@ int BitArray::RetrieveInt(int nbits, int atBitPos, int* toInt) {
 		*toInt |= (int)GetBit(i) << (i - atBitPos);
 }
 
-int BitArray::RetrieveChar(int nbits, int atBitPos, char* toChar) {
+int BitArray::RetrieveChar(int nbits, int atBitPos, unsigned char* toChar) {
 	if (nbits >  sizeof(char) * 8) return -1;
+	*toChar = 0;
 	for (int i = atBitPos; i < atBitPos + nbits; i++)
 		*toChar |= (int)GetBit(i) << (i - atBitPos);
 }
@@ -229,7 +229,7 @@ void BitArray::InsertBitsFromByteToByte(unsigned char sourceByte, int sourceBitS
 }
 
 unsigned char* BitArray::ReverseByteArray(unsigned char byteArray[]) {
-	int l = sizeof(byteArray);
+	int l = sizeof(*byteArray);
 	unsigned char* _v = (unsigned char*)malloc(l * sizeof(char));
 	for (int i = 0; i < l; i++) _v[l - i - 1] = byteArray[i];
 	return _v;
