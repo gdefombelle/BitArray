@@ -43,10 +43,7 @@ private:
 	unsigned char* ReverseByteArray(unsigned char *byteArray, int len);
 	void InsertBitsFromByteToByte(unsigned char sourceByte, int sourceBitStartIndex, int targetByteIndex, int targetBitStartIndex, int nbits);
 	int GetBit(int atPos);
-	bool BIG_ENDIAN=false; // default
-
-	// Byte array hold the bit set - it is LITTLE ENDIAN - ex FA021BC7:?
-	// b[0] = C7; b[1] = 1B; b[2] = 02; b[3] = FA
+	bool BIG_ENDIAN=false; // default is LITTLE_ENDIAN
 	unsigned char *byteArray;
 	int byteArrayCount;
 	unsigned char OneByteMask(int from, int to);

@@ -43,7 +43,7 @@ int main()
 	bitArray.StoreInt(6, 3, 27);
 	bitArray.StoreFloat(9, (float)3.14159);
 	bitArray.StoreChar(8, 41, 255);
-	bitArray.StoreLong(32, 49, 785987);
+	bitArray.StoreLong(32, 49, 78987);
 	bitArray.StoreInt(4, 81, 14);
 	bitArray.SetBit(85, true);
 	bitArray.SetBit(86, true);
@@ -69,7 +69,19 @@ int main()
 	bitArray.Bit(92, &b7);
 	bitArray.RetrieveByteArray(31, 93, byteArray, sizeof(byteArray));
 	bitArray.RetrieveInt(4, 124, &i4);
-
+	// Print everything
+	printf("b1: %d\n",b1);
+	printf("b2: %d\n",b2);
+	printf("b3: %d\n",b3);
+	printf("i1: %d\n",i1);
+	printf("f1: %f\n",f1);
+	printf("c1: %d\n",c1);
+	printf("l1: %d\n",l1);
+	printf("i2: %d\n",i2);
+	printf("b4: %d\n",b4);
+	printf("b5: %d\n",b5);
+	printf("b6: %d\n",b6);
+	printf("i3: %d\n",i3);
 	// Print bitArray
 	unsigned char* buffer;
 	buffer = bitArray.GetEntireBitArray();
