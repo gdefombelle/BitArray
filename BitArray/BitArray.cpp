@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include <bitset>
 
-
-// 32 bits+  basic type length
-
-
 BitArray::BitArray(int bitSize)
 {	
 	byteArrayCount = ((bitSize + 7) / 8);
@@ -66,25 +62,16 @@ int BitArray::StoreChar(int nbits, int atBitPos, unsigned char value) {
 	u.c = value;
 	return StoreByteArray(nbits, 0, atBitPos, u.bytes, sizeof(char));
 }
+
 int BitArray::StoreLong(int nbits, int atBitPos, long value) {
 	if (nbits > sizeof(long) * 8) return false;
-	int len = sizeof(long);
-	union {
-		long l;
-		unsigned char bytes[sizeof(long)];
-	} u;
-	u.l = value;
-	return StoreByteArray(nbits, 0, atBitPos, u.bytes, sizeof(long));
+	LongToByteArray(value);
+	return StoreByteArray(nbits, 0, atBitPos, _baLong, sizeof(long));
 }
 int BitArray::StoreULong(int nbits, int atBitPos, unsigned long value) {
 	if (nbits > sizeof(long) * 8) return false;
-	int len = sizeof(unsigned long);
-	union {
-		unsigned long ul;
-		unsigned char bytes[sizeof(unsigned long)];
-	} u;
-	u.ul = value;
-	return StoreByteArray(nbits, 0, atBitPos, u.bytes, sizeof(long));
+	LongToByteArray(value);
+	return StoreByteArray(nbits, 0, atBitPos, _baLong, sizeof(long));
 }
 
 int BitArray::StoreFloat(int atBitPos, float value) {
@@ -117,7 +104,6 @@ int BitArray::StoreByteArray(int nbits, int fromSourceStartingBit, int atTargetS
 	//
 	// convert byte array to LITTLE_ENDIAN
 	if (BIG_ENDIAN) value = ReverseByteArray(value, length);
-
 
 	int sourceEndingByte = (fromSourceStartingBit + nbits) / 8 - 1;
 	int sourceEndingBit = fromSourceStartingBit + nbits - 1;
@@ -192,8 +178,8 @@ int BitArray::RetrieveULong(int nbits, int atBitPos, unsigned long* toUlong) {
 	for (int i = atBitPos; i < atBitPos + nbits; i++)
 		*toUlong |= (int)GetBit(i) << (i - atBitPos);
 }
-int BitArray::RetrieveLong(int nbits, int atBitPos, long* toLong) {
-	return BitArray::RetrieveULong(nbits, atBitPos, (unsigned long*)toLong);
+int BitArray::RetrieveLong(int nbits, int atBitPos,  long* toLong) {
+	return BitArray::RetrieveULong(nbits, atBitPos, (unsigned  long*)toLong);
 }
 
 int BitArray::RetrieveFloat(int atBitPos, float* toFloat) {
@@ -285,4 +271,25 @@ bool BitArray::IsBigEndian(void)
 		char c[4];
 	} bint = { 0x01020304 };
 	return bint.c[0] == 1;
+}
+
+void BitArray::LongToByteArray(unsigned int n) {
+	int l = sizeof(long);
+	for (int i = 0; i <l; i++) {
+		_baLong[i] = (n >> 8 * i) & 0xFF;
+	}
+}
+
+void BitArray::IntToByteArray(unsigned int n) {
+	int l = sizeof(int);
+	for (int i =0; i <l; i++) {
+		_baInt[i] = (n >> 8 * i) & 0xFF;
+	}
+}
+
+void BitArray::CharToByteArray(unsigned char n) {
+	int l = sizeof(char);
+	for (int i = 0; i <l; i++) {
+		_baChar[i] = (n >> 8 * i) & 0xFF;
+	}
 }

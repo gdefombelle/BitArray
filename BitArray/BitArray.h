@@ -17,8 +17,8 @@ public:
 	int StoreInt(int nbits, int atBitPos, int from);
 	int StoreUInt(int nbits, int atBitPos, unsigned int from);
 	int StoreChar(int nbits, int atBitPos, unsigned char from);
-	int StoreULong(int nbits, int atBitPos, unsigned long from);
 	int StoreLong(int nbits, int atBitPos, long from);
+	int StoreULong(int nbits, int atBitPos, unsigned long from);
 	int StoreFloat(int atBitPos, float from);
 	int StoreDouble(int atBitPos, double from);
 
@@ -28,8 +28,8 @@ public:
 	int RetrieveInt(int nbits, int atBitPos, int* toInt);
 	int RetrieveChar(int nbits, int atBitPos, unsigned char* toChar);
 	int RetrieveUInt(int nbits, int atBitPos, unsigned int* toUint);
-	int RetrieveULong(int nbits, int atBitPos, unsigned long* toUlong);
 	int RetrieveLong(int nbits, int atBitPos, long* toLong);
+	int RetrieveULong(int nbits, int atBitPos, unsigned long* toLong);
 	int RetrieveFloat(int atBitPos, float* toFloat);
 	int RetrieveDouble(int atBitPos, double* toDouble);
 
@@ -47,6 +47,12 @@ private:
 	unsigned char *byteArray;
 	int byteArrayCount;
 	unsigned char OneByteMask(int from, int to);
+	void LongToByteArray(unsigned int n);
+	void IntToByteArray(unsigned int n);
+	void CharToByteArray(unsigned char n);
+	unsigned char _baChar[sizeof(char)];
+	unsigned char _baInt[sizeof(int)];
+	unsigned char _baLong[sizeof(long)];
 };
 
 #endif
