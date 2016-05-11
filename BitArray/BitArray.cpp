@@ -176,7 +176,7 @@ int BitArray::RetrieveULong(int nbits, int atBitPos, unsigned long* toUlong) {
 	if (nbits> len * 8) return -1;
 	*toUlong = 0;
 	for (int i = atBitPos; i < atBitPos + nbits; i++)
-		*toUlong |= (int)GetBit(i) << (i - atBitPos);
+		*toUlong |= (unsigned int)GetBit(i) << (i - atBitPos);
 }
 int BitArray::RetrieveLong(int nbits, int atBitPos,  long* toLong) {
 	return BitArray::RetrieveULong(nbits, atBitPos, (unsigned  long*)toLong);
