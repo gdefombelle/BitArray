@@ -11,7 +11,7 @@ public:
 
 	//store
 	~BitArray();
-	int StoreByteArray(int nbits, int fromStartingBit, int atStartingBit, unsigned char from[], int length);
+	int StoreBits(int nbits, int fromStartingBit, int atStartingBit, unsigned char from[], int length);
 	int SetBit(int atBitPos, bool b);
 	int ToggleBit(int atBitPos, bool *b);
 	int StoreInt(int nbits, int atBitPos, int from);

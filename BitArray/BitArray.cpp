@@ -38,7 +38,7 @@ int BitArray::StoreInt(int nbits, int atBitPos, int value) {
 		unsigned char bytes[sizeof(int)];
 	} u;
 	u.i = value;
-	return StoreByteArray(nbits, 0, atBitPos, u.bytes, sizeof(int));
+	return StoreBits(nbits, 0, atBitPos, u.bytes, sizeof(int));
 }
 int BitArray::StoreUInt(int nbits, int atBitPos, unsigned int value) {
 	if (nbits > sizeof(int) * 8) return false;
@@ -48,7 +48,7 @@ int BitArray::StoreUInt(int nbits, int atBitPos, unsigned int value) {
 		unsigned char bytes[sizeof(int)];
 	} u;
 	u.i = value;
-	return StoreByteArray(nbits, 0, atBitPos, u.bytes, sizeof(int));
+	return StoreBits(nbits, 0, atBitPos, u.bytes, sizeof(int));
 }
 
 int BitArray::StoreChar(int nbits, int atBitPos, unsigned char value) {
@@ -60,18 +60,18 @@ int BitArray::StoreChar(int nbits, int atBitPos, unsigned char value) {
 		unsigned char bytes[sizeof(char)];
 	} u;
 	u.c = value;
-	return StoreByteArray(nbits, 0, atBitPos, u.bytes, sizeof(char));
+	return StoreBits(nbits, 0, atBitPos, u.bytes, sizeof(char));
 }
 
 int BitArray::StoreLong(int nbits, int atBitPos, long value) {
 	if (nbits > sizeof(long) * 8) return false;
 	LongToByteArray(value);
-	return StoreByteArray(nbits, 0, atBitPos, _baLong, sizeof(long));
+	return StoreBits(nbits, 0, atBitPos, _baLong, sizeof(long));
 }
 int BitArray::StoreULong(int nbits, int atBitPos, unsigned long value) {
 	if (nbits > sizeof(long) * 8) return false;
 	LongToByteArray(value);
-	return StoreByteArray(nbits, 0, atBitPos, _baLong, sizeof(long));
+	return StoreBits(nbits, 0, atBitPos, _baLong, sizeof(long));
 }
 
 int BitArray::StoreFloat(int atBitPos, float value) {
@@ -82,7 +82,7 @@ int BitArray::StoreFloat(int atBitPos, float value) {
 		unsigned char bytes[sizeof(float)];
 	} u;
 	u.af = value;
-	return StoreByteArray(len * 8, 0, atBitPos, u.bytes, sizeof(float));
+	return StoreBits(len * 8, 0, atBitPos, u.bytes, sizeof(float));
 }
 
 int BitArray::StoreDouble(int atBitPos, double value) {
@@ -93,11 +93,11 @@ int BitArray::StoreDouble(int atBitPos, double value) {
 		unsigned char bytes[sizeof(double)];
 	} u;
 	u.af = value;
-	return StoreByteArray(len * 8, 0, atBitPos, u.bytes, sizeof(double));
+	return StoreBits(len * 8, 0, atBitPos, u.bytes, sizeof(double));
 }
 
 
-int BitArray::StoreByteArray(int nbits, int fromSourceStartingBit, int atTargetStartingBit, unsigned char value[], int length) {
+int BitArray::StoreBits(int nbits, int fromSourceStartingBit, int atTargetStartingBit, unsigned char value[], int length) {
 	int ret = true;
 	if (atTargetStartingBit + nbits > byteArrayCount * 8) return 3;
 	//if (fromSourceStartingBit + nbits > sizeof(value) * sizeof(char) * 8) return 5;

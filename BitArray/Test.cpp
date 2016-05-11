@@ -40,17 +40,17 @@ int main()
 	bitArray.SetBit(0, true);
 	bitArray.SetBit(1, false);
 	bitArray.SetBit(2, true);
-	bitArray.StoreInt(6, 3, 27);
-	bitArray.StoreFloat(9, (float)3.14159);
+	bitArray.StoreInt(6, 3, 67);
+	bitArray.StoreFloat(9, (float)46.582842);
 	bitArray.StoreChar(8, 41, 255);
-	bitArray.StoreLong(32, 49, 2231000);
+	bitArray.StoreLong(32, 49, 46582842);
 	bitArray.StoreInt(4, 81, 14);
 	bitArray.SetBit(85, true);
 	bitArray.SetBit(86, true);
 	bitArray.SetBit(87, true);
 	bitArray.StoreInt(4, 88, 13);
 	bitArray.SetBit(92, true);
-	bitArray.StoreByteArray(31, 0, 93, byteArray, sizeof(byteArray)/sizeof(char));
+	bitArray.StoreBits(31, 0, 93, byteArray, sizeof(byteArray)/sizeof(char));
 	bitArray.StoreInt(4, 124, 12);
 	
 	// Retrieve
