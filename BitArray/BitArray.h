@@ -43,16 +43,17 @@ private:
 	unsigned char* ReverseByteArray(unsigned char *byteArray, int len);
 	void InsertBitsFromByteToByte(unsigned char sourceByte, int sourceBitStartIndex, int targetByteIndex, int targetBitStartIndex, int nbits);
 	int GetBit(int atPos);
-	bool BIG_ENDIAN=false; // default is LITTLE_ENDIAN
+	bool BIG_ENDIAN = false; // default is LITTLE_ENDIAN
 	unsigned char *byteArray;
 	int byteArrayCount;
 	unsigned char OneByteMask(int from, int to);
-	void LongToByteArray(unsigned int n);
+	void LongToByteArray(unsigned long n);
 	void IntToByteArray(unsigned int n);
 	void CharToByteArray(unsigned char n);
 	unsigned char _baChar[sizeof(char)];
 	unsigned char _baInt[sizeof(int)];
 	unsigned char _baLong[sizeof(long)];
 };
+
 
 #endif

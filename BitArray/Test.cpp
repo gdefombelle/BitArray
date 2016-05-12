@@ -7,7 +7,7 @@
 #include <string.h>
 int main()
 {
-	const int length = 128;
+	const int length = 96;
 	/*
 	Example : storing and retrievening this data to and from a 12 bytes (96 bits) BitArray
 	data	number of bits to store

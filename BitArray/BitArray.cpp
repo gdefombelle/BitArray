@@ -4,7 +4,7 @@
 #include <bitset>
 
 BitArray::BitArray(int bitSize)
-{	
+{
 	byteArrayCount = ((bitSize + 7) / 8);
 	byteArray = (unsigned char*)calloc(byteArrayCount, sizeof(char));
 	Initialize();
@@ -54,7 +54,7 @@ int BitArray::StoreUInt(int nbits, int atBitPos, unsigned int value) {
 int BitArray::StoreChar(int nbits, int atBitPos, unsigned char value) {
 	if (nbits > sizeof(char) * 8) return false;
 	int len = sizeof(char);
-	
+
 	union {
 		char c;
 		unsigned char bytes[sizeof(char)];
@@ -176,10 +176,14 @@ int BitArray::RetrieveULong(int nbits, int atBitPos, unsigned long* toUlong) {
 	if (nbits> len * 8) return -1;
 	*toUlong = 0;
 	for (int i = atBitPos; i < atBitPos + nbits; i++)
-		*toUlong |= (unsigned int)GetBit(i) << (i - atBitPos);
+		*toUlong |= (unsigned long)GetBit(i) << (i - atBitPos);
 }
-int BitArray::RetrieveLong(int nbits, int atBitPos,  long* toLong) {
-	return BitArray::RetrieveULong(nbits, atBitPos, (unsigned  long*)toLong);
+int BitArray::RetrieveLong(int nbits, int atBitPos, long* toLong) {
+	int len = sizeof(long);
+	if (nbits> len * 8) return -1;
+	*toLong = 0;
+	for (int i = atBitPos; i < atBitPos + nbits; i++)
+		*toLong |= (unsigned long)GetBit(i) << (i - atBitPos);
 }
 
 int BitArray::RetrieveFloat(int atBitPos, float* toFloat) {
@@ -273,7 +277,7 @@ bool BitArray::IsBigEndian(void)
 	return bint.c[0] == 1;
 }
 
-void BitArray::LongToByteArray(unsigned int n) {
+void BitArray::LongToByteArray(unsigned long n) {
 	int l = sizeof(long);
 	for (int i = 0; i <l; i++) {
 		_baLong[i] = (n >> 8 * i) & 0xFF;
@@ -282,7 +286,7 @@ void BitArray::LongToByteArray(unsigned int n) {
 
 void BitArray::IntToByteArray(unsigned int n) {
 	int l = sizeof(int);
-	for (int i =0; i <l; i++) {
+	for (int i = 0; i <l; i++) {
 		_baInt[i] = (n >> 8 * i) & 0xFF;
 	}
 }

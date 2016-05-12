@@ -160,6 +160,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\Dropbox\line-up.io\BitArray\BitArray-Cpp-class.docx" />
     <None Include="..\..\..\..\Dropbox\line-up.io\BitArray\BitArray-Cpp-class.pdf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

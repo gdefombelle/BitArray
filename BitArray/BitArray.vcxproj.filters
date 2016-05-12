@@ -46,5 +46,8 @@
     <None Include="..\..\..\..\Dropbox\line-up.io\BitArray\BitArray-Cpp-class.pdf">
       <Filter>Doc</Filter>
     </None>
+    <None Include="..\..\..\..\Dropbox\line-up.io\BitArray\BitArray-Cpp-class.docx">
+      <Filter>Doc</Filter>
+    </None>
   </ItemGroup>
 </Project>
