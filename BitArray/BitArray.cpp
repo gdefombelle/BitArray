@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "BitArray.h"
 #include <stdlib.h>
-#include <bitset>
+
 
 BitArray::BitArray(int bitSize)
 {
