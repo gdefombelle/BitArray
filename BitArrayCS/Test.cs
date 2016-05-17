@@ -72,18 +72,18 @@ namespace BitArrayCS
             bitArray.RetrieveByteArray(31, 93, byteArray);
             bitArray.RetrieveInt(4, 124, ref i4);
             // Print everything
-            Console.WriteLine("b1: %d\n", b1);
-            Console.WriteLine("b2: %d\n", b2);
-            Console.WriteLine("b3: %d\n", b3);
-            Console.WriteLine("i1: %d\n", i1);
-            Console.WriteLine("f1: %f\n", f1);
-            Console.WriteLine("c1: %d\n", c1);
-            Console.WriteLine("l1: %d\n", l1);
-            Console.WriteLine("i2: %d\n", i2);
-            Console.WriteLine("b4: %d\n", b4);
-            Console.WriteLine("b5: %d\n", b5);
-            Console.WriteLine("b6: %d\n", b6);
-            Console.WriteLine("i3: %d\n", i3);
+            Console.WriteLine("b1: {0}", b1);
+            Console.WriteLine("b2: {0}", b2);
+            Console.WriteLine("b3: {0}", b3);
+            Console.WriteLine("i1: {0}", i1);
+            Console.WriteLine("f1: {0}", f1);
+            Console.WriteLine("c1: {0}", c1);
+            Console.WriteLine("l1: {0}", l1);
+            Console.WriteLine("i2: {0}", i2);
+            Console.WriteLine("b4: {0}", b4);
+            Console.WriteLine("b5: {0}", b5);
+            Console.WriteLine("b6: {0}", b6);
+            Console.WriteLine("i3: {0}", i3);
 
             // Print bitArray
             byte[] buffer;
@@ -92,7 +92,7 @@ namespace BitArrayCS
             for (i = 0; i < buffer.Length; i++)
             {
                 if (i > 0) Console.Write(":");
-                Console.Write("%02X", buffer[i]);
+                Console.Write("{0}: ", buffer[i]);
             }
             Console.WriteLine();
             Console.ReadKey();
