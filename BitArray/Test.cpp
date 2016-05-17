@@ -40,7 +40,7 @@ int main()
 	bitArray.SetBit(0, true);
 	bitArray.SetBit(1, false);
 	bitArray.SetBit(2, true);
-	bitArray.StoreInt(6, 3, 67);
+	bitArray.StoreUInt(6, 3, 37);
 	bitArray.StoreFloat(9, (float)46.582842);
 	bitArray.StoreChar(8, 41, 255);
 	bitArray.StoreLong(32, 49, 46582842);

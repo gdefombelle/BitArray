@@ -32,6 +32,8 @@ int BitArray::ToggleBit(int atBitPos, bool *b) {
 }
 int BitArray::StoreInt(int nbits, int atBitPos, int value) {
 	if (nbits > sizeof(int) * 8) return false;
+	// check for possible overflow
+	if (value >= _power2[nbits]) return -1;
 	int len = sizeof(int);
 	union {
 		int i;
@@ -42,6 +44,8 @@ int BitArray::StoreInt(int nbits, int atBitPos, int value) {
 }
 int BitArray::StoreUInt(int nbits, int atBitPos, unsigned int value) {
 	if (nbits > sizeof(int) * 8) return false;
+	// check for possible overflow
+	if (value >= _power2[nbits]) return -1;
 	int len = sizeof(int);
 	union {
 		unsigned int i;
@@ -53,6 +57,8 @@ int BitArray::StoreUInt(int nbits, int atBitPos, unsigned int value) {
 
 int BitArray::StoreChar(int nbits, int atBitPos, unsigned char value) {
 	if (nbits > sizeof(char) * 8) return false;
+	// check for possible overflow
+	if (value >= _power2[nbits]) return -1;
 	int len = sizeof(char);
 
 	union {
@@ -65,11 +71,15 @@ int BitArray::StoreChar(int nbits, int atBitPos, unsigned char value) {
 
 int BitArray::StoreLong(int nbits, int atBitPos, long value) {
 	if (nbits > sizeof(long) * 8) return false;
+	// check for possible overflow
+	if (value >= _power2[nbits - 1]) return -1;
 	LongToByteArray(value);
 	return StoreBits(nbits, 0, atBitPos, _baLong, sizeof(long));
 }
 int BitArray::StoreULong(int nbits, int atBitPos, unsigned long value) {
 	if (nbits > sizeof(long) * 8) return false;
+	// check for possible overflow
+	if (value >= _power2[nbits]) return -1;
 	LongToByteArray(value);
 	return StoreBits(nbits, 0, atBitPos, _baLong, sizeof(long));
 }
@@ -159,6 +169,7 @@ int BitArray::RetrieveInt(int nbits, int atBitPos, int* toInt) {
 	*toInt = 0;
 	for (int i = atBitPos; i < atBitPos + nbits; i++)
 		*toInt |= (int)GetBit(i) << (i - atBitPos);
+	return true;
 }
 
 int BitArray::RetrieveChar(int nbits, int atBitPos, unsigned char* toChar) {
@@ -166,6 +177,7 @@ int BitArray::RetrieveChar(int nbits, int atBitPos, unsigned char* toChar) {
 	*toChar = 0;
 	for (int i = atBitPos; i < atBitPos + nbits; i++)
 		*toChar |= (int)GetBit(i) << (i - atBitPos);
+	return 1;
 }
 
 int BitArray::RetrieveUInt(int nbits, int atBitPos, unsigned int* toUint) {
@@ -177,6 +189,7 @@ int BitArray::RetrieveULong(int nbits, int atBitPos, unsigned long* toUlong) {
 	*toUlong = 0;
 	for (int i = atBitPos; i < atBitPos + nbits; i++)
 		*toUlong |= (unsigned long)GetBit(i) << (i - atBitPos);
+	return true;
 }
 int BitArray::RetrieveLong(int nbits, int atBitPos, long* toLong) {
 	int len = sizeof(long);
@@ -184,6 +197,7 @@ int BitArray::RetrieveLong(int nbits, int atBitPos, long* toLong) {
 	*toLong = 0;
 	for (int i = atBitPos; i < atBitPos + nbits; i++)
 		*toLong |= (unsigned long)GetBit(i) << (i - atBitPos);
+	return true;
 }
 
 int BitArray::RetrieveFloat(int atBitPos, float* toFloat) {
@@ -297,3 +311,5 @@ void BitArray::CharToByteArray(unsigned char n) {
 		_baChar[i] = (n >> 8 * i) & 0xFF;
 	}
 }
+
+
