@@ -37,12 +37,17 @@ BitArray::~BitArray()
 	delete byteArray;
 }
 
+void BitArray::Clear() {
+	byteArray = (unsigned char*)calloc(byteArrayCount, sizeof(char));
+	cursor = 0;
+}
 // ******************* Store ************************************
 
 int BitArray::SetBit(int atBitPos, bool b) {
 	if (atBitPos > byteArrayCount * sizeof(char) * 8) return false;
 	if (b) byteArray[atBitPos / 8] |= (1 << (atBitPos % 8));
 	else byteArray[atBitPos / 8] &= ~(1 << (atBitPos % 8));
+	cursor++;
 	return true;
 }
 int BitArray::ToggleBit(int atBitPos, bool *b) {
@@ -129,10 +134,7 @@ int BitArray::StoreDouble(int atBitPos, double value) {
 
 
 int BitArray::StoreBits(int nbits, int fromSourceStartingBit, int atTargetStartingBit, unsigned char value[], int length) {
-	int ret = true;
-	if (atTargetStartingBit + nbits > byteArrayCount * 8) return 3;
-	//if (fromSourceStartingBit + nbits > sizeof(value) * sizeof(char) * 8) return 5;
-	//
+	if (atTargetStartingBit + nbits > byteArrayCount * 8) return -1;
 	// convert byte array to LITTLE_ENDIAN
 	if (BIG_ENDIAN) value = ReverseByteArray(value, length);
 
@@ -159,9 +161,102 @@ int BitArray::StoreBits(int nbits, int fromSourceStartingBit, int atTargetStarti
 		cursorSourceGlobalBit += bitPacketSize;
 		cursorTargetGlobalBit += bitPacketSize;
 	}
-
-	return ret;
+	//
+	cursor = atTargetStartingBit + nbits;
+	return true;
 }
+
+// ************************ Append *****************************
+int BitArray::Append(bool value) {
+	if (IsAvailableRoom(1)) {
+		return  SetBit(cursor, value);
+	}
+	else
+		return -1; // no room
+		
+}
+int BitArray::Append(char value, int nbits) {
+	if (IsAvailableRoom(nbits)) {
+		return StoreChar(nbits, cursor, value);
+	}
+	else
+		return -1; // no room
+}
+int BitArray::Append(unsigned char value) {
+	return Append(value, sizeof(char) * 8);
+}
+int BitArray::Append(int value, int nbits) {
+	if (IsAvailableRoom(nbits)) {
+		return StoreInt(nbits, cursor, value);
+	}
+	else
+		return -1; // no room
+}
+int BitArray::Append(int value) {
+	return Append(value, sizeof(int) * 8);
+}
+
+int BitArray::Append(unsigned int value, int nbits) {
+	if (IsAvailableRoom(nbits)) {
+		return StoreUInt(nbits, cursor, value);
+	}
+	else
+		return -1; //no room
+}
+int BitArray::Append(unsigned int value) {
+	return Append(value, sizeof(unsigned int) * 8);
+}
+
+int BitArray::Append(long value, int nbits) {
+	if (IsAvailableRoom(nbits)) {
+		return StoreLong(nbits, cursor, value);
+
+	}
+	else
+		return -1; // no room
+
+}
+int BitArray::Append(long value) {
+	return Append(value, sizeof(long) * 8);
+}
+
+int BitArray::Append(unsigned long value, int nbits) {
+	if (IsAvailableRoom(nbits)) {
+		return StoreULong(nbits, cursor, value);
+	}
+	else
+		return -1; // no room
+
+}
+int BitArray::Append(unsigned long value) {
+	return Append(value, sizeof(unsigned long) * 8);
+}
+
+int BitArray::Append(float value) {
+	if (IsAvailableRoom(sizeof(float)*8)) {
+		return StoreFloat(cursor, value);
+	}
+	else
+		return -1; // no room
+}
+
+int BitArray::Append(double value) {
+	if (IsAvailableRoom(sizeof(double) * 8)) {
+		StoreFloat(cursor, value);
+	}
+	else
+		return -1; // no room
+}
+
+int BitArray::Append(unsigned char value[], int length) {
+	if (IsAvailableRoom(sizeof(char)*length)) {
+		return StoreBits(length * sizeof(char), 0, cursor, value, length);
+	}
+	else {
+		return -1; // no room
+	}
+}
+
 // ***************** Retrieve **********************************
 int BitArray::Bit(int atBitPos, bool *b) {
 	if (atBitPos > byteArrayCount * sizeof(char) * 8) return -1;
@@ -331,6 +426,10 @@ void BitArray::CharToByteArray(unsigned char n) {
 	for (int i = 0; i <l; i++) {
 		_baChar[i] = (n >> 8 * i) & 0xFF;
 	}
+}
+
+bool BitArray::IsAvailableRoom(int nbits) {
+	return cursor + nbits <= byteArrayCount * 8;
 }
 
 

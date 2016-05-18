@@ -7,6 +7,27 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BitArray", "BitArray\BitArr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitArrayCS", "BitArrayCS\BitArrayCS.csproj", "{48AD7EC5-7838-4638-98C9-0286BA8439D5}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "BitArrayJS(1)", "BitArrayJS\", "{395F1A39-204B-4C3E-ADC9-F42123A43FD1}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_51708"
+		Debug.AspNetCompiler.PhysicalPath = "BitArrayJS\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51708\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_51708"
+		Release.AspNetCompiler.PhysicalPath = "BitArrayJS\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51708\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "51708"
+		SlnRelativePath = "BitArrayJS\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +60,18 @@ Global
 		{48AD7EC5-7838-4638-98C9-0286BA8439D5}.Release|x64.Build.0 = Release|Any CPU
 		{48AD7EC5-7838-4638-98C9-0286BA8439D5}.Release|x86.ActiveCfg = Release|Any CPU
 		{48AD7EC5-7838-4638-98C9-0286BA8439D5}.Release|x86.Build.0 = Release|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Debug|x64.Build.0 = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Debug|x86.Build.0 = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Release|x64.ActiveCfg = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Release|x64.Build.0 = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Release|x86.ActiveCfg = Debug|Any CPU
+		{395F1A39-204B-4C3E-ADC9-F42123A43FD1}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

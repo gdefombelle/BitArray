@@ -35,7 +35,23 @@ public:
 
 	unsigned char* GetEntireBitArray();
 	int GetBitArraySizeByte();
-	bool IsBigEndian(void);
+	void Clear();
+	// Append
+	int Append(bool value);
+	int Append(unsigned char value);
+	int Append(char value, int nbits);
+	int Append(int value);
+	int Append(int value, int nbits);
+	int Append(unsigned int value);
+	int Append(unsigned int value, int nbits);
+	int Append(long value);
+	int Append(long value, int nbits);
+	int Append(unsigned long value);
+	int Append(unsigned long value, int nbits);
+	int Append(float value);
+	int Append(double value);
+	int Append(unsigned char value[], int length);
+
 
 private:
 	void Initialize();
@@ -43,6 +59,7 @@ private:
 	unsigned char* ReverseByteArray(unsigned char *byteArray, int len);
 	void InsertBitsFromByteToByte(unsigned char sourceByte, int sourceBitStartIndex, int targetByteIndex, int targetBitStartIndex, int nbits);
 	int GetBit(int atPos);
+	bool IsBigEndian(void);
 	bool BIG_ENDIAN = false; // default is LITTLE_ENDIAN
 	unsigned char *byteArray;
 	int byteArrayCount;
@@ -56,7 +73,9 @@ private:
 	// 2 power 32 was deliberately changed to 2 32 -1 () power to be contained in 32-bit
 	unsigned long _power2[33]{1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576, 
 		2097152,4194304 ,8388608 ,16777216 ,33554432 ,67108864 ,134217728 ,268435456 ,536870912 ,1073741824 ,2147483648 ,4294967295 };
-
+	// history  stack
+	int cursor = 0;
+	bool IsAvailableRoom(int nbits);
 };
 
 
