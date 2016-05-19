@@ -10,5 +10,4 @@ Basically BitArray provides methods for
 1.	Simply insert n bits from a source (int, long, float, double, char, bool, byte[]) toward  a BitArray starting at a given bit index. You can also append any data to the byte array without worrying about the bit index 
 2.	Retrieve data from the BitArray within a bit range into regular basic typed data such as int, long, float, double, char, bool, byte[], etc.
 Compatibility: BitArray lib is designed to be compatible with most of compilers including limited C++ such Arduino.
-BASICS
-T
+
