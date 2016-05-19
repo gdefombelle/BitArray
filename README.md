@@ -29,23 +29,7 @@ On top of StoreBits a set of useful methods offered to directly store some bits 
 •	int StoreLong(int nbits, int atBitPos, long from);
 •	int StoreFloat(int atBitPos, float from);
 •	int StoreDouble(int atBitPos, double from);
-## SIMPLY APPEND DATA AT THE TAIL OF THE BIT ARRAY
-In addition you can use the Append set of methods:
-int Append(bool value);
-*	int Append(unsigned char value);
-	int Append(unsigned char value, int nbits);
-	int Append(int value);
-	int Append(int value, int nbits);
-	int Append(unsigned int value);
-	int Append(unsigned int value, int nbits);
-	int Append(long value);
-	int Append(long value, int nbits);
-	int Append(unsigned long value);
-	int Append(unsigned long value, int nbits);
-	int Append(float value);
-	int Append(double value);
-	int Append(unsigned char value[], int length);
-	int Append(unsigned char value[], int length, int nbits);
+
 
 
 RETRIEVING REGULAR TYPED DATA FROM CHUNKS OF BIT ARRAY
