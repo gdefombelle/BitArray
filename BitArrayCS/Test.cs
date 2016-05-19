@@ -45,7 +45,7 @@ namespace BitArrayCS
             bitArray.SetBit(2, true);
             bitArray.StoreInt(6, 3, 37);
             bitArray.StoreFloat(9, (float)46.582842);
-            bitArray.StoreChar(8, 41, 255);
+            bitArray.StoreByte(8, 41, 255);
             bitArray.StoreLong(32, 49, 46582842);
             bitArray.StoreInt(4, 81, 14);
             bitArray.SetBit(85, true);
@@ -61,7 +61,7 @@ namespace BitArrayCS
             bitArray.Bit(2, ref b3);
             bitArray.RetrieveInt(6, 3, ref i1);
             bitArray.RetrieveFloat(9, ref f1);
-            bitArray.RetrieveChar(8, 41, ref c1);
+            bitArray.RetrieveByte(8, 41, ref c1);
             bitArray.RetrieveLong(32, 49, ref l1);
             bitArray.RetrieveInt(4, 81, ref i2);
             bitArray.Bit(85, ref b4);
@@ -95,6 +95,64 @@ namespace BitArrayCS
                 Console.Write("{0}: ", buffer[i]);
             }
             Console.WriteLine();
+            // Test Append
+            BitArray bitArray2 = new BitArray(length);
+
+            bitArray2.Append(b1);
+            bitArray2.Append(b2);
+            bitArray2.Append(b3);
+            bitArray2.Append(i1, 6);
+            bitArray2.Append(f1);
+            bitArray2.Append(c1);
+            bitArray2.Append(l1, 32);
+            bitArray2.Append(i2, 4);
+            bitArray2.Append(b4);
+            bitArray2.Append(b5);
+            bitArray2.Append(b6);
+            bitArray2.Append(i3, 4);
+            bitArray2.Append(b7);
+            bitArray2.Append(byteArray,31);
+            bitArray2.Append(i4, 4);
+            //Retrieve
+            // Retrieve
+            bitArray2.Bit(0, ref b1);
+            bitArray2.Bit(1, ref b2);
+            bitArray2.Bit(2, ref b3);
+            bitArray2.RetrieveInt(6, 3, ref i1);
+            bitArray2.RetrieveFloat(9, ref f1);
+            bitArray2.RetrieveByte(8, 41, ref c1);
+            bitArray2.RetrieveLong(32, 49, ref l1);
+            bitArray2.RetrieveInt(4, 81, ref i2);
+            bitArray2.Bit(85, ref b4);
+            bitArray2.Bit(86, ref b5);
+            bitArray2.Bit(87, ref b6);
+            bitArray2.RetrieveInt(4, 88, ref i3);
+            bitArray2.Bit(92, ref b7);
+            bitArray2.RetrieveByteArray(31, 93, byteArray);
+            bitArray2.RetrieveInt(4, 124, ref i4);
+            // Print everything
+            Console.WriteLine("b1: {0}", b1);
+            Console.WriteLine("b2: {0}", b2);
+            Console.WriteLine("b3: {0}", b3);
+            Console.WriteLine("i1: {0}", i1);
+            Console.WriteLine("f1: {0}", f1);
+            Console.WriteLine("c1: {0}", c1);
+            Console.WriteLine("l1: {0}", l1);
+            Console.WriteLine("i2: {0}", i2);
+            Console.WriteLine("b4: {0}", b4);
+            Console.WriteLine("b5: {0}", b5);
+            Console.WriteLine("b6: {0}", b6);
+            Console.WriteLine("i3: {0}", i3);
+
+            // Print bitArray
+
+            buffer = bitArray2.ByteArray;
+
+            for (i = 0; i < buffer.Length; i++)
+            {
+                if (i > 0) Console.Write(":");
+                Console.Write("{0}: ", buffer[i]);
+            }
             Console.ReadKey();
             return;
         }

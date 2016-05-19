@@ -31,14 +31,14 @@ namespace BitArrayCS
         bool BIG_ENDIAN = false; // default is LITTLE_ENDIAN
         byte[] byteArray;
         int byteArrayCount;
-        byte[] _baChar = new byte[sizeof(char)];
+        byte[] _baChar = new byte[sizeof(byte)];
         byte[] _baInt = new byte[sizeof(int)];
         byte[] _baLong = new byte[sizeof(long)];
         // 2 power 32 was deliberately changed to 2 32 -1 () power to be contained in 32-bit
         UInt32[] _power2 = new UInt32[33]{1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,
     		2097152,4194304 ,8388608 ,16777216 ,33554432 ,67108864 ,134217728 ,268435456 ,536870912 ,1073741824 ,2147483648 ,4294967295 };
-
-    public BitArray(int bitSize)
+        int cursor = 0;
+        public BitArray(int bitSize)
         {
             byteArrayCount = ((bitSize + 7) / 8);
             byteArray = new byte[ByteArrayCount];
@@ -61,6 +61,19 @@ namespace BitArrayCS
             }
         }
 
+        public int Cursor
+        {
+            get
+            {
+                return cursor;
+            }
+
+            set
+            {
+                cursor = value;
+            }
+        }
+
         void Initialize()
         {
             for (int i = 0; i < ByteArrayCount; i++)
@@ -78,14 +91,15 @@ namespace BitArrayCS
 
         public int SetBit(int atBitPos, bool b)
         {
-            if (atBitPos > byteArrayCount * sizeof(char) * 8) return 0;
+            if (atBitPos > byteArrayCount * sizeof(byte) * 8) return 0;
             if (b) byteArray[atBitPos / 8] |=(byte) (1 << (atBitPos % 8));
             else byteArray[atBitPos / 8] &= (byte)~(1 << (atBitPos % 8));
+            cursor++;
             return 1;
         }
         public int ToggleBit(int atBitPos, ref bool b)
         {
-            if (atBitPos > byteArrayCount * sizeof(char)) return 0;
+            if (atBitPos > byteArrayCount * sizeof(byte)) return 0;
             byteArray[atBitPos / 8] ^= (byte)(1 << (atBitPos % 8));
             b = (byteArray[atBitPos / 8] & (1 << (atBitPos % 8))) !=0;
             return 1;
@@ -110,9 +124,9 @@ namespace BitArrayCS
             byte[] bytes = BitConverter.GetBytes(value);
             return StoreBits(nbits, 0, atBitPos, bytes);
         }
-        public int StoreChar(int nbits, int atBitPos, byte value)
+        public int StoreByte(int nbits, int atBitPos, byte value)
         {
-            if (nbits > sizeof(char) * 8) return 0;
+            if (nbits > sizeof(byte) * 8) return 0;
             // check for possible overflow
             if (value >= _power2[nbits]) return -1;
             byte[] bytes = BitConverter.GetBytes(value);
@@ -151,17 +165,138 @@ namespace BitArrayCS
             byte[] bytes = BitConverter.GetBytes(value);
             return StoreBits(len * 8, 0, atBitPos, bytes);
         }
+        //******************* Append ***********************
+        public int Append(bool value)
+        {
+            if (IsAvailableRoom(1))
+            {
+                return SetBit(cursor, value);
+            }
+            else
+                return -1; // no room
+        }
 
+        public int Append(byte value, int nbits)
+        {
+            if (IsAvailableRoom(nbits))
+            {
+                return StoreByte(nbits, cursor, value);
+            }
+            else
+                return -1; // no room
+        }
+        public int Append(byte value)
+        {
+            return Append(value, sizeof(byte) * 8);
+        }
+        public int Append(int value, int nbits)
+        {
+            if (IsAvailableRoom(nbits))
+            {
+                return StoreInt(nbits, cursor, value);
+            }
+            else
+                return -1; // no room
+        }
+        public int Append(int value)
+        {
+            return Append(value, sizeof(int) * 8);
+        }
+        public int Append(uint value, int nbits)
+        {
+            if (IsAvailableRoom(nbits))
+            {
+                return StoreUInt(nbits, cursor, value);
+            }
+            else
+                return -1; //no room
+        }
+        public int Append(uint value)
+        {
+            return Append(value, sizeof(uint) * 8);
+        }
+        public int Append(long value, int nbits)
+        {
+            if (IsAvailableRoom(nbits))
+            {
+                return StoreLong(nbits, cursor, value);
+
+            }
+            else
+                return -1; // no room
+
+        }
+        public int Append(long value)
+        {
+            return Append(value, sizeof(long) * 8);
+        }
+        public int Append(ulong value, int nbits)
+        {
+            if (IsAvailableRoom(nbits))
+            {
+                return StoreULong(nbits, cursor, value);
+            }
+            else
+                return -1; // no room
+
+        }
+        public int Append(ulong value)
+        {
+            return Append(value, sizeof(ulong) * 8);
+        }
+        public int Append(float value)
+        {
+            if (IsAvailableRoom(sizeof(float) * 8))
+            {
+                return StoreFloat(cursor, value);
+            }
+            else
+                return -1; // no room
+        }
+
+        public int Append(double value)
+        {
+            if (IsAvailableRoom(sizeof(double) * 8))
+            {
+               return StoreDouble(cursor, value);
+            }
+            else
+                return -1; // no room
+        }
+
+        public int Append(byte[] value)
+        {
+            if (IsAvailableRoom(sizeof(byte) * value.Length*8))
+            {
+                return StoreBits(sizeof(byte) * value.Length * 8, 0, cursor, value);
+            }
+            else
+            {
+                return -1; // no room
+            }
+        }
+
+        public int Append(byte[] value, int nbits)
+        {
+            if (IsAvailableRoom(sizeof(byte) * value.Length * 8))
+            {
+                return StoreBits(nbits, 0, cursor, value);
+            }
+            else
+            {
+                return -1; // no room
+            }
+        }
         //******************* Retrieve *********************
         public int Bit(int atBitPos, ref bool b)
         {
-            if (atBitPos > byteArrayCount * sizeof(char) * 8) return -1;
+            if (atBitPos > byteArrayCount * sizeof(byte) * 8) return -1;
             b = (byteArray[atBitPos / 8] & (1 << (atBitPos % 8))) !=0;
             return 1;
         }
         public int RetrieveByteArray(int nbits, int atBitPos, byte[] buffer)
         {
-            if (nbits > buffer.Length * sizeof(char) * 8) return -1;
+            if (nbits > buffer.Length * sizeof(byte) * 8) return -1;
             for (int i = 0; i < buffer.Length; i++) buffer[i] = 0;
 
             int cursorBuffer = 0;
@@ -230,9 +365,9 @@ namespace BitArrayCS
             toDouble = BitConverter.ToDouble(buffer, 0);
             return 1;
         }
-        public int RetrieveChar(int nbits, int atBitPos, ref byte toChar)
+        public int RetrieveByte(int nbits, int atBitPos, ref byte toChar)
         {
-            if (nbits > sizeof(char) * 8) return -1;
+            if (nbits > sizeof(byte) * 8) return -1;
             toChar = 0;
             for (int i = atBitPos; i < atBitPos + nbits; i++)
                 toChar |= (byte)((int)GetBit(i) << (i - atBitPos));
@@ -244,7 +379,7 @@ namespace BitArrayCS
         {
             int ret = 1;
             if (atTargetStartingBit + nbits > byteArrayCount * 8) return 3;
-            //if (fromSourceStartingBit + nbits > sizeof(value) * sizeof(char) * 8) return 5;
+            //if (fromSourceStartingBit + nbits > sizeof(value) * sizeof(byte) * 8) return 5;
             //
             // convert byte array to LITTLE_ENDIAN
             if (BIG_ENDIAN) value = ReverseByteArray(value);
@@ -273,7 +408,8 @@ namespace BitArrayCS
                 cursorSourceGlobalBit += bitPacketSize;
                 cursorTargetGlobalBit += bitPacketSize;
             }
-
+            // update cursor
+            cursor = atTargetStartingBit + nbits;
             return ret;
         }
 
@@ -304,6 +440,12 @@ namespace BitArrayCS
             byte c = (byte)(byteArray[atPos / 8] & (1 << (atPos % 8)));
             return (c == 0 ? 0 : 1);
         }
+        bool IsAvailableRoom(int nbits)
+        {
+            return cursor + nbits  <= byteArrayCount * 8;
+        }
+
+
 
     }
 }

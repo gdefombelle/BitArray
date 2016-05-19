@@ -39,7 +39,7 @@ public:
 	// Append
 	int Append(bool value);
 	int Append(unsigned char value);
-	int Append(char value, int nbits);
+	int Append(unsigned char value, int nbits);
 	int Append(int value);
 	int Append(int value, int nbits);
 	int Append(unsigned int value);

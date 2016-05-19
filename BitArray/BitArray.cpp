@@ -161,7 +161,7 @@ int BitArray::StoreBits(int nbits, int fromSourceStartingBit, int atTargetStarti
 		cursorSourceGlobalBit += bitPacketSize;
 		cursorTargetGlobalBit += bitPacketSize;
 	}
-	//
+	// update cursor
 	cursor = atTargetStartingBit + nbits;
 	return true;
 }
@@ -175,7 +175,7 @@ int BitArray::Append(bool value) {
 		return -1; // no room
 		
 }
-int BitArray::Append(char value, int nbits) {
+int BitArray::Append(unsigned char value, int nbits) {
 	if (IsAvailableRoom(nbits)) {
 		return StoreChar(nbits, cursor, value);
 	}
@@ -242,7 +242,7 @@ int BitArray::Append(float value) {
 
 int BitArray::Append(double value) {
 	if (IsAvailableRoom(sizeof(double) * 8)) {
-		StoreFloat(cursor, value);
+		return StoreDouble(cursor, value);
 	}
 	else
 		return -1; // no room
