@@ -256,6 +256,14 @@ int BitArray::Append(unsigned char value[], int length) {
 		return -1; // no room
 	}
 }
+int BitArray::Append(unsigned char value[], int length, int nbits) {
+	if (IsAvailableRoom(nbits)) {
+		return StoreBits(nbits, 0, cursor, value, length);
+	}
+	else {
+		return -1; // no room
+	}
+}
 
 // ***************** Retrieve **********************************
 int BitArray::Bit(int atBitPos, bool *b) {

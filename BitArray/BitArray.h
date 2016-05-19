@@ -51,6 +51,7 @@ public:
 	int Append(float value);
 	int Append(double value);
 	int Append(unsigned char value[], int length);
+	int Append(unsigned char value[], int length, int nbits);
 
 
 private:

@@ -109,7 +109,7 @@ int main()
 	bitArray2.Append(b6);
 	bitArray2.Append(i3, 4);
 	bitArray2.Append(b7);
-	bitArray2.Append(byteArray, sizeof(byteArray));
+	bitArray2.Append(byteArray, sizeof(byteArray),31);
 	bitArray2.Append(i4, 4);
 	// Retrieve
 	bitArray2.Bit(0, &b1);
