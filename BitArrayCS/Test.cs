@@ -114,7 +114,7 @@ namespace BitArrayCS
             bitArray2.Append(byteArray,31);
             bitArray2.Append(i4, 4);
             //Retrieve
-            // Retrieve
+
             bitArray2.Bit(0, ref b1);
             bitArray2.Bit(1, ref b2);
             bitArray2.Bit(2, ref b3);
@@ -147,6 +147,50 @@ namespace BitArrayCS
             // Print bitArray
 
             buffer = bitArray2.ByteArray;
+
+            for (i = 0; i < buffer.Length; i++)
+            {
+                if (i > 0) Console.Write(":");
+                Console.Write("{0}: ", buffer[i]);
+            }
+            Console.WriteLine();
+
+
+            byte[] sourceBitArray = (byte[])bitArray2.ByteArray.Clone();
+            BitArray bitArray3 = new BitArray(sourceBitArray);
+
+            bitArray3.Bit(0, ref b1);
+            bitArray3.Bit(1, ref b2);
+            bitArray3.Bit(2, ref b3);
+            bitArray3.RetrieveInt(6, 3, ref i1);
+            bitArray3.RetrieveFloat(9, ref f1);
+            bitArray3.RetrieveByte(8, 41, ref c1);
+            bitArray3.RetrieveLong(32, 49, ref l1);
+            bitArray3.RetrieveInt(4, 81, ref i2);
+            bitArray3.Bit(85, ref b4);
+            bitArray3.Bit(86, ref b5);
+            bitArray3.Bit(87, ref b6);
+            bitArray3.RetrieveInt(4, 88, ref i3);
+            bitArray3.Bit(92, ref b7);
+            bitArray3.RetrieveByteArray(31, 93, byteArray);
+            bitArray3.RetrieveInt(4, 124, ref i4);
+            // Print everything
+            Console.WriteLine("b1: {0}", b1);
+            Console.WriteLine("b2: {0}", b2);
+            Console.WriteLine("b3: {0}", b3);
+            Console.WriteLine("i1: {0}", i1);
+            Console.WriteLine("f1: {0}", f1);
+            Console.WriteLine("c1: {0}", c1);
+            Console.WriteLine("l1: {0}", l1);
+            Console.WriteLine("i2: {0}", i2);
+            Console.WriteLine("b4: {0}", b4);
+            Console.WriteLine("b5: {0}", b5);
+            Console.WriteLine("b6: {0}", b6);
+            Console.WriteLine("i3: {0}", i3);
+
+            // Print bitArray
+
+            buffer = bitArray3.ByteArray;
 
             for (i = 0; i < buffer.Length; i++)
             {

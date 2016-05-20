@@ -19,10 +19,8 @@
 
 */
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BitArrayCS
 {
@@ -44,7 +42,12 @@ namespace BitArrayCS
             byteArray = new byte[ByteArrayCount];
             Initialize();
         }
-
+        public BitArray(byte[] sourceByteArray)
+        {
+            byteArrayCount = sourceByteArray.Length;
+            byteArray = sourceByteArray;
+            BIG_ENDIAN = !IsBigEndian();
+        }
         public byte[] ByteArray
         {
             get
@@ -278,7 +281,7 @@ namespace BitArrayCS
 
         public int Append(byte[] value, int nbits)
         {
-            if (IsAvailableRoom(sizeof(byte) * value.Length * 8))
+            if (IsAvailableRoom(nbits))
             {
                 return StoreBits(nbits, 0, cursor, value);
             }
@@ -339,7 +342,7 @@ namespace BitArrayCS
         }
         public int RetrieveLong(int nbits, int atBitPos, ref long toLong)
         {
-            int len = sizeof(int);
+            int len = sizeof(long);
             if (nbits > len * 8) return -1;
             toLong = 0;
             for (int i = atBitPos; i < atBitPos + nbits; i++)

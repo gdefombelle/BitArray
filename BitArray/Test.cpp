@@ -141,7 +141,6 @@ int main()
 	printf("b6: %d\n", b6);
 	printf("i3: %d\n", i3);
 	// Print bitArray
-
 	buffer = bitArray2.GetEntireBitArray();
 	for (i = 0; i < bitArray2.GetBitArraySizeByte(); i++)
 	{
@@ -149,8 +148,50 @@ int main()
 		printf("%02X", buffer[i]);
 	}
 	printf("\n");
+	unsigned char* buffer2 = bitArray2.GetEntireBitArray();
+	int len = bitArray2.GetBitArraySizeByte();
+	BitArray bitArray3(buffer2, len);
+	// Retrieve
+	bitArray3.Bit(0, &b1);
+	bitArray3.Bit(1, &b2);
+	bitArray3.Bit(2, &b3);
+	bitArray3.RetrieveInt(6, 3, &i1);
+	bitArray3.RetrieveFloat(9, &f1);
+	bitArray3.RetrieveChar(8, 41, &c1);
+	bitArray3.RetrieveLong(32, 49, &l1);
+	bitArray3.RetrieveInt(4, 81, &i2);
+	bitArray3.Bit(85, &b4);
+	bitArray3.Bit(86, &b5);
+	bitArray3.Bit(87, &b6);
+	bitArray3.RetrieveInt(4, 88, &i3);
+	bitArray3.Bit(92, &b7);
+	bitArray3.RetrieveByteArray(31, 93, byteArray, sizeof(byteArray));
+	bitArray3.RetrieveInt(4, 124, &i4);
+	// Print everything
+	printf("b1: %d\n", b1);
+	printf("b2: %d\n", b2);
+	printf("b3: %d\n", b3);
+	printf("i1: %d\n", i1);
+	printf("f1: %f\n", f1);
+	printf("c1: %d\n", c1);
+	printf("l1: %d\n", l1);
+	printf("i2: %d\n", i2);
+	printf("b4: %d\n", b4);
+	printf("b5: %d\n", b5);
+	printf("b6: %d\n", b6);
+	printf("i3: %d\n", i3);
+	// Print bitArray
+	buffer = bitArray3.GetEntireBitArray();
+	for (i = 0; i < bitArray2.GetBitArraySizeByte(); i++)
+	{
+		if (i > 0) printf(":");
+		printf("%02X", buffer[i]);
+	}
+
+	printf("\n");
 	_getch();
-	
+
+
 
 	return 0;
 }

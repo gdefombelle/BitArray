@@ -8,6 +8,7 @@ class BitArray
 
 public:
 	BitArray(int bitSize);
+	BitArray(unsigned char  *byteArray, int len);
 
 	//store
 	~BitArray();

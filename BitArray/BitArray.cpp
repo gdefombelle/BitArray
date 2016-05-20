@@ -31,6 +31,11 @@ BitArray::BitArray(int bitSize)
 	Initialize();
 }
 
+BitArray::BitArray(unsigned char  *sourceByteArray, int len) {
+	byteArrayCount = len; 
+	byteArray = sourceByteArray;
+	BIG_ENDIAN = IsBigEndian();
+}
 
 BitArray::~BitArray()
 {
