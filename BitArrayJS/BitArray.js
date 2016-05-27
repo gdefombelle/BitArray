@@ -20,9 +20,6 @@
 */
 
 
-
-
-
 function ByteArray(bitSize, byteArray) {
     BIG_ENDIAN = false; // default is LITTLE_ENDIAN
     _baChar = new Uint8Array(sizeof(char));
@@ -58,6 +55,11 @@ function ByteArray(bitSize, byteArray) {
         }
         return inc();
     }
+
+    function isAvailableRoom(nbist){
+
+    }
+
     function BIG_ENDIAN() {
         var _bigEndian = null;
         function isBigEndian() {
@@ -72,5 +74,81 @@ function ByteArray(bitSize, byteArray) {
         if (!_bigEndian) { _bigEndian = isBigEndian(); }
         return _bigEndian;
     }
+    // ******************* Store ************************
+    
+    function setBit(atBitPos, value) {
+        if (atBitPos > byteArrayCount * sizeof(byte) * 8) return 0;
+        if (b) byteArray[atBitPos / 8] |=(byte) (1 << (atBitPos % 8));
+        else byteArray[atBitPos / 8] &= (byte)(~(1 << (atBitPos % 8)));
+        forwardCursor(1);
+        return true;
+    }
+    function toggleBit(atBitPos, value) {
+        if (atBitPos > byteArrayCount * sizeof(byte)) return 0;
+        byteArray[atBitPos / 8] ^= (byte)(1 << (atBitPos % 8));
+        b = (byteArray[atBitPos / 8] & (1 << (atBitPos % 8))) !=0;
+        return true;
+    }
+    function storeInt(nbits, atBitPos, value) {
+        if (nbits > sizeof(int) * 8) return 0;
+        if (value >= _power2[nbits]) return -1;
+        // negative value cannotbe truncated (yet)
+        if (value < 0 && nbits != sizeof(int) * 8) return -2;
+        var bytes = [0, 0, 0, 0];
+        var x = value;
+        for ( var index = 0; index < bytes.length; index ++ ) {
+            var byte = x & 0xff;
+            bytes [ index ] = byte;
+            x = (x - byte) / 256 ;
+        }
+        return StoreBits(nbits, 0, atBitPos, bytes);
+    }
+
+    function storeByte(nbits, atBitPos, value) {
+        if (nbits > sizeof(byte) * 8) return 0;
+        if (value >= _power2[nbits]) return -1;
+        var bytes = [value];
+        return StoreBits(nbits, 0, atBitPos, bytes);
+    }
+
+    function storeLong(nbist, atBitPos, value) {
+        if (nbits > sizeof(long) * 8) return 0;
+        // negative value cannotbe truncated
+        if (value < 0 && nbits != sizeof(long) * 8) return -2;
+        // check for possible overflow
+        if (value >= _power2[nbits - 1]) return -1;
+        var bytes = [0, 0, 0, 0, 0, 0, 0, 0];
+        var x = value;
+        for (var index = 0; index < bytes.length; index++) {
+            var byte = x & 0xff;
+            bytes[index] = byte;
+            x = (x - byte) / 256;
+        }
+        return StoreBits(nbits, 0, atBitPos, bytes);
+    };
+
+    function storeFloat(atBitPos, value) {
+        len = sizeof(float);
+        if (len * 8 + atBitPos - 1 > byteArrayCount * 8) return -1;
+        var far = new Float32Array(1);
+        far[0] = value;
+        var bytes = UInt8Array(far.buffer);
+        return StoreBits(len * 8, 0, atBitPos, bytes);
+    }
+
+    function storeDouble(atBitPos, value) {
+        len = sizeof(double);
+        if (len * 8 + atBitPos - 1 > byteArrayCount * 8) return -1;
+        var far = new Float64Array(1);
+        far[0] = value;
+        var bytes = UInt8Array(far.buffer);
+        return StoreBits(len * 8, 0, atBitPos, bytes);
+    }
+
+    // ****************** Append ************************
+    function AppendBit(value) {
+
+    }
 
 }
+
