@@ -3,8 +3,172 @@
 <head>
     <title></title>
 	<meta charset="utf-8" />
+    <script src="BitArray.js"></script>
+    <script src="test.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js"></script>
 </head>
 <body>
     <h1>Bonjour</h1>
+    <p>
+        <!-- STORE -->
+        <table>
+            <!-- BIT -->
+            <tr>
+                <td>bool1? </td>
+                <td><input type="number" id="Sbool1" /></td>
+            </tr>
+            <tr>
+                <td>atBit positions? </td>
+                <td><input type="number" id="atBitPos" /></td>
+            </tr>
+            <tr>
+                <td>
+                    <input width="200" type="button" placeholder="perform" onclick="bA.setBit($('#atBitPos').val(), $('#Sbool1').val())"/>
+                </td>
+                <td></td>
+            </tr>
+            <!-- INT (<=4 bytes)-->
+            <tr>
+                <td>int1?? </td>
+                <td><input type="number" id="SInt1" /></td>
+            </tr>
+            <tr>
+                <td>atBit positions? </td>
+                <td><input type="number" id="atBitPosInt1" /></td>
+            </tr>
+            <tr>
+                <td>
+                    <input width="200" type="button" placeholder="perform" onclick="bA.storeInt(32, $('#atBitPosInt1').val(), $('#SInt1').val())" />
+                </td>
+                <td></td>
+            </tr>
+            <!-- LONG (<=8 bytes)-->
+            <tr>
+                <td>long1?? </td>
+                <td><input type="number" id="SLong1" /></td>
+            </tr>
+            <tr>
+                <td>atBit positions? </td>
+                <td><input type="number" id="atBitPosLong1" /></td>
+            </tr>
+            <tr>
+                <td>
+                    <input width="200" type="button" placeholder="perform" onclick="bA.storeLong(64, $('#atBitPosLong1').val(), $('#SLong1').val())" />
+                </td>
+                <td></td>
+            </tr>
+            <!-- BYTE -->
+            <tr>
+                <td>byte1?? </td>
+                <td><input type="number" id="SByte1" /></td>
+            </tr>
+            <tr>
+                <td>atBit positions? </td>
+                <td><input type="number" id="atBitPosByte1" /></td>
+            </tr>
+            <tr>
+                <td>
+                    <input width="200" type="button" placeholder="perform" onclick="bA.storeByte(8, $('#atBitPosByte1').val(), $('#SByte1').val())" />
+                </td>
+                <td></td>
+            </tr>
+            <!-- FLOAT (4 bytes) -->
+            <tr>
+                <td>float1? </td>
+                <td><input type="number" id="SFloat1" /></td>
+            </tr>
+            <tr>
+                <td>atBit positions? </td>
+                <td><input type="number" id="atBitPosFloat1" /></td>
+            </tr>
+            <tr>
+                <td>
+                    <input width="200" type="button" placeholder="perform" onclick="bA.storeFloat($('#atBitPosFloat1').val(), $('#SFloat1').val())" />
+                </td>
+                <td></td>
+            </tr>
+
+        </table>
+        <!-- RETRIEVE -->
+        <table>
+            <!-- BIT -->
+            <tr>
+                <td>atBit positions? </td>
+                <td><input type="number" id="RatBitPos" /></td>
+            </tr>
+            <tr>
+                <td>->bool1 =  </td>
+                <td id="Rbool1"></td>
+            </tr>
+            <tr>
+                <td>
+                    <input width="200" type="button" placeholder="perform" onclick="$('#Rbool1').text( bA.bit($('#RatBitPos').val()))" />
+                </td>
+                <td></td>
+
+            </tr>
+            <!-- INT (4 bytes) -->
+            <tr>
+                <td>atBit positions? </td>
+                <td><input type="number" id="RatBitPosInt" /></td>
+            </tr>
+            <tr>
+                <td>->int1 =  </td>
+                <td id="RInt1"></td>
+            </tr>
+            <tr>
+                <td>
+                    <input width="200" type="button" placeholder="perform" onclick="$('#RInt1').text(bA.retrieveInt(32,$('#RatBitPosInt').val()))" />
+                </td>
+                <td></td>
+            </tr>
+            <!-- LONG (8 bytes) -->
+            <tr>
+                <td>atBit positions? </td>
+                <td><input type="number" id="RatBitPosLong" /></td>
+            </tr>
+            <tr>
+                <td>->long1 =  </td>
+                <td id="RLong1"></td>
+            </tr>
+            <tr>
+                <td>
+                    <input width="200" type="button" placeholder="perform" onclick="$('#RLong1').text(bA.retrieveLong(64,$('#RatBitPosLong').val()))" />
+                </td>
+                <td></td>
+            </tr>
+            <!-- BYTE -->
+            <tr>
+                <td>atBit positions? </td>
+                <td><input type="number" id="RatBitPosByte" /></td>
+            </tr>
+            <tr>
+                <td>->byte1 =  </td>
+                <td id="RByte1"></td>
+            </tr>
+            <tr>
+                <td>
+                    <input width="200" type="button" placeholder="perform" onclick="$('#RByte1').text(bA.retrieveByte(8, $('#RatBitPosByte').val()))" />
+                </td>
+                <td></td>
+            </tr>
+            <!-- FLOAT (4 bytes) -->
+            <tr>
+                <td>atBit positions? </td>
+                <td><input type="number" id="RatBitPosFloat" /></td>
+            </tr>
+            <tr>
+                <td>->float1 =  </td>
+                <td id="RFloat1"></td>
+            </tr>
+            <tr>
+                <td>
+                    <input width="200" type="button" placeholder="perform" onclick="$('#RFloat1').text(bA.retrieveFloat(8, $('#RatBitPosFloat').val()))" />
+                </td>
+                <td></td>
+            </tr>
+        </table>
+</p>
+
 </body>
 </html>
